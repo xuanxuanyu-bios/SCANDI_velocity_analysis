@@ -42,5 +42,5 @@ The cellranger output contains the required files for subsequent generation of "
 
 
 ## Step 2: Generate .loom files using velocyto
-This step can follow the tutorial <a href="https://github.com/xuanxuanyu-bios/SCANDI_velocity_analysis/blob/582a06f6c1b403a38e3810ebf79ecc77afebbc25/Tutorials/Share%20ef9c1a2e5ced4f86bacc799fc023e023.html">
+This step can follow the <a href="https://github.com/xuanxuanyu-bios/SCANDI_velocity_analysis/blob/582a06f6c1b403a38e3810ebf79ecc77afebbc25/Tutorials/Share%20ef9c1a2e5ced4f86bacc799fc023e023.html" title="velocyto"> velocyto tutorial <\a>
 
