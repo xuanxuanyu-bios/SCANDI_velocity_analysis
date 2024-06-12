@@ -39,3 +39,7 @@ done
 
 ```
 The cellranger output contains the required files for subsequent generation of ".loom" files which is needed to run the scvelo.
+
+
+## Step 2: Generate .loom files using velocyto
+
