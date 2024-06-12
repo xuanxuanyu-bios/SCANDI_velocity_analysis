@@ -42,5 +42,48 @@ The cellranger output contains the required files for subsequent generation of "
 
 
 ## Step 2: Generate .loom files using velocyto
-This step can follow the <a href="https://github.com/xuanxuanyu-bios/SCANDI_velocity_analysis/blob/582a06f6c1b403a38e3810ebf79ecc77afebbc25/Tutorials/Share%20ef9c1a2e5ced4f86bacc799fc023e023.html" title="velocyto"> velocyto tutorial </a>
+This step can follow the <a href="https://github.com/xuanxuanyu-bios/SCANDI_velocity_analysis/blob/582a06f6c1b403a38e3810ebf79ecc77afebbc25/Tutorials/Share%20ef9c1a2e5ced4f86bacc799fc023e023.html" title="velocyto"> velocyto tutorial </a>. Specifically, 
+
+```
+#!/bin/bash
+#SBATCH --job-name=SCANDI_velocyto      # Job name
+#SBATCH  --account=bercelis
+#SBATCH  --qos=bercelis
+#SBATCH --mail-type=NONE         # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=xuanxuanyu@ufl.edu  # where to send mail.  Set this to your email address
+#SBATCH --ntasks=1                  # Number of MPI tasks (i.e. processes)
+#SBATCH --cpus-per-task=1            # Number of cores per MPI task
+#SBATCH --mem=40gb                    # Job memory request
+#SBATCH --time=48:00:00               # Time limit hrs:min:sec
+#SBATCH --output=/blue/bercelis/share/Cellranger_SCANDI/output/-%j.log     # Path to the standard output and error files relative to the working directory
+
+## module avail
+# module load conda/24.3.0
+# cd /blue/bercelis/share/Cellranger_SCANDI/step2_velocyto/conda_environment
+# conda env create --file TutorialEnvironment.yml
+
+# Load conda module and activate environment	
+module load conda/24.3.0
+cd /blue/bercelis/share/Cellranger_SCANDI/step2_velocyto/conda_environment
+conda activate tutorial
+module load samtools/1.9
+module load velocyto/0.17
+
+
+# Path to the directory containing sample subfolders
+samples_dir=/blue/bercelis/share/Cellranger_SCANDI/Cellranger_output
+
+# Path to the GTF file
+gtf_path=/blue/bercelis/share/Cellranger_SCANDI/refdata-gex-GRCh38-2020-A/refdata-gex-GRCh38-2020-A/genes/genes.gtf
+
+# Loop over each sample folder and run velocyto
+for sample_dir in "$samples_dir"/*; do
+    if [ -d "$sample_dir" ]; then
+        echo "Running velocyto on $(basename "$sample_dir")"
+        velocyto run10x "$sample_dir" "$gtf_path"
+    fi
+done
+```
+
+
 
